@@ -1,0 +1,25 @@
+MORPHOLOGY="$1"
+
+# running the kinect skeleton
+echo "running kinect skeleton"
+roslaunch my_skeleton_markers markers.launch &
+sleep 2
+
+# running the basic meccanoid communication
+echo "running meccanoid"
+rosrun meccanoid_ros meccanoid.py &
+sleep 2
+
+# running the comsar package
+echo "running comsar experiment"
+rosrun meccanoid_comsor movements.py $MORPHOLOGY &
+
+
+# rosbag
+# ***** set the name of the morphology *******
+rosbag record -a -o data/comsar_openday_humanoid.bag
+
+
+
+
+
